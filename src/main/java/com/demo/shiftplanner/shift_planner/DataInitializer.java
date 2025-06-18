@@ -5,6 +5,7 @@ import com.demo.shiftplanner.shift_planner.repository.AssignmentRepository;
 import com.demo.shiftplanner.shift_planner.repository.UserRepository;
 import com.demo.shiftplanner.shift_planner.repository.WishRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,24 +15,19 @@ import java.util.List;
 public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
-    private final WishRepository wishRepository;
-    private final AssignmentRepository assignmentRepository;
-    public DataInitializer(UserRepository userRepository,
-                           WishRepository wishRepository,
-                           AssignmentRepository assignmentRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public DataInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.wishRepository =wishRepository;
-        this.assignmentRepository = assignmentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public void run(String ...args) throws Exception {
-
-        List<User> users = userRepository.findAll();
-        List<Wish> wishes = wishRepository.findAll();
-        List<Assignment> assignments= assignmentRepository.findAll();
-        users.forEach(System.out::println);
-        wishes.forEach(System.out::println);
-        assignments.forEach(System.out::println);
+    public void run(String... args) throws Exception {
+        if (!userRepository.findByUsername("admin").isPresent()) {
+            User admin = new User("admin", passwordEncoder.encode("admin123"), Role.ADMIN);
+            userRepository.save(admin);
+            System.out.println("Parola hash-uită: " + admin.getPassword());
+        }
     }
 }
