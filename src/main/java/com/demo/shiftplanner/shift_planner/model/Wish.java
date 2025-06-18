@@ -63,5 +63,13 @@ public class Wish {
         this.shiftType = shiftType;
     }
 
-
+    @Override
+    public String toString() {
+        return "Wish{" +
+                "id=" + id +
+                ", employee=" + employee +
+                ", date=" + date +
+                ", shiftType=" + shiftType +
+                '}';
+    }
 }

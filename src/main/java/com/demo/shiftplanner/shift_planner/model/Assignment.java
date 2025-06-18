@@ -64,5 +64,13 @@ public class Assignment {
         this.shiftType = shiftType;
     }
 
-
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "id=" + id +
+                ", employee=" + employee +
+                ", date=" + date +
+                ", shiftType=" + shiftType +
+                '}';
+    }
 }

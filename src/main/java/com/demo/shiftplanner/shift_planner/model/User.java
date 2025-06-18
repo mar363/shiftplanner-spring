@@ -18,12 +18,18 @@ public class User {
     @Column
     private  Role role;
 
-    public Long getId() {
-        return id;
+
+    public User() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public User(String username,String password,Role role ) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -50,12 +56,13 @@ public class User {
         this.role = role;
     }
 
-    public User() {
-    }
-
-    public User(Role role, String password, String username) {
-        this.role = role;
-        this.password = password;
-        this.username = username;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
