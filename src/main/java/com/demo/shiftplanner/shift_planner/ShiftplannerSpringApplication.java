@@ -14,8 +14,4 @@ public class ShiftplannerSpringApplication {
 		SpringApplication.run(ShiftplannerSpringApplication.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }
