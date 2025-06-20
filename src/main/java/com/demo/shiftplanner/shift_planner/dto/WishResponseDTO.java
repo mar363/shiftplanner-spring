@@ -8,6 +8,9 @@ public class WishResponseDTO {
     private String date;
     private String shift;
 
+    public WishResponseDTO() {
+    }
+
     public WishResponseDTO(Long id, Long employeeId, String date, String shift) {
         this.id = id;
         this.employeeId = employeeId;
@@ -29,5 +32,15 @@ public class WishResponseDTO {
 
     public String getShift() {
         return shift;
+    }
+
+    @Override
+    public String toString() {
+        return "WishResponseDTO{" +
+                "id=" + id +
+                ", employeeId=" + employeeId +
+                ", date='" + date + '\'' +
+                ", shift='" + shift + '\'' +
+                '}';
     }
 }

@@ -7,14 +7,14 @@ import com.demo.shiftplanner.shift_planner.model.ShiftType;
 import com.demo.shiftplanner.shift_planner.model.User;
 import com.demo.shiftplanner.shift_planner.model.Wish;
 import com.demo.shiftplanner.shift_planner.repository.WishRepository;
-import org.springframework.cglib.core.Local;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
 public class WishService {
     private final WishRepository wishRepository;
     private final UserService userService;

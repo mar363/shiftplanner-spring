@@ -1,16 +1,10 @@
 package com.demo.shiftplanner.shift_planner;
 
 import com.demo.shiftplanner.shift_planner.model.*;
-import com.demo.shiftplanner.shift_planner.repository.AssignmentRepository;
 import com.demo.shiftplanner.shift_planner.repository.UserRepository;
-import com.demo.shiftplanner.shift_planner.repository.WishRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -22,29 +16,37 @@ public class DataInitializer implements CommandLineRunner {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    @Bean
-    public CommandLineRunner createAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return args -> {
-            if (userRepository.findByUsername("admin").isEmpty()) {
-                String raw = "admin123";
-                String hash = passwordEncoder.encode(raw);
-                User admin = new User();
-                admin.setUsername("admin");
-                admin.setPassword(hash);
-                admin.setRole(Role.ADMIN);
-                userRepository.save(admin);
-                System.out.println("Admin created: username=admin, parola="+raw);
-            }
-        };
-    }
 
 
     @Override
-    public void run(String... args) throws Exception {
-        if (!userRepository.findByUsername("admin").isPresent()) {
-            User admin = new User("admin", passwordEncoder.encode("admin123"), Role.ADMIN);
+    public void run(String... args) {
+        seedAdmin();
+        seedEmployee();
+    }
+
+    private void seedAdmin() {
+        if (userRepository.findByUsername("admin").isEmpty()) {
+            String raw = "admin123";
+            String hash = passwordEncoder.encode(raw);
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword(hash);
+            admin.setRole(Role.ADMIN);
             userRepository.save(admin);
-            System.out.println("Parola hash-uită: " + admin.getPassword());
+            System.out.println("Admin created!");
         }
+
+    }
+
+    private void seedEmployee() {
+        if (userRepository.findByUsername("user1").isEmpty()) {
+            User user = new User();
+            user.setUsername("user1");
+            user.setPassword(passwordEncoder.encode("user123"));
+            user.setRole(Role.EMPLOYEE);
+            userRepository.save(user);
+            System.out.println("User created!");
+        }
+
     }
 }

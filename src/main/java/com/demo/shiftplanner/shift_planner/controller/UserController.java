@@ -4,7 +4,7 @@ package com.demo.shiftplanner.shift_planner.controller;
 import com.demo.shiftplanner.shift_planner.dto.CreateUserRequest;
 import com.demo.shiftplanner.shift_planner.dto.UserResponseDTO;
 import com.demo.shiftplanner.shift_planner.service.UserService;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+
     public List<UserResponseDTO> list() {
         return userService.listEmployees();
     }

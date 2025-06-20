@@ -12,6 +12,16 @@ public class WishRequest {
     @NotBlank
     private String shiftType;
 
+
+    public WishRequest() {
+    }
+
+    public WishRequest(Long employeeId, String date, String shiftType) {
+        this.employeeId = employeeId;
+        this.date = date;
+        this.shiftType = shiftType;
+    }
+
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -34,5 +44,14 @@ public class WishRequest {
 
     public void setShiftType(String shiftType) {
         this.shiftType = shiftType;
+    }
+
+    @Override
+    public String toString() {
+        return "WishRequest{" +
+                "employeeId=" + employeeId +
+                ", date='" + date + '\'' +
+                ", shiftType='" + shiftType + '\'' +
+                '}';
     }
 }
