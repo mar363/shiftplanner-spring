@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface WishRepository extends JpaRepository<Wish, Long> {
     Optional<Wish> findByEmployeeAndDate(User user, LocalDate date);
     List<Wish> findByDateAndShiftType(LocalDate date, ShiftType shiftType);
+    List<Wish> findByDate(LocalDate date);
 }

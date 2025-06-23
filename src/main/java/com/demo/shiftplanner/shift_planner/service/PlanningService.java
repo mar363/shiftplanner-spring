@@ -9,6 +9,7 @@ import com.demo.shiftplanner.shift_planner.repository.WishRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.apache.tomcat.util.http.FastHttpDateFormat.parseDate;
-
+@Service
 public class PlanningService {
     private final UserRepository userRepository;
     private final WishRepository wishRepository;

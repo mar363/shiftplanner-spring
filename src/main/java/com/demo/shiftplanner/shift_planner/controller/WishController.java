@@ -31,7 +31,7 @@ public class WishController {
     @GetMapping
     public ResponseEntity<List<WishResponseDTO>> getWishes(
             @RequestParam String date,
-            @RequestParam String shift) {
+            @RequestParam(required = false) String shift) {
         List<WishResponseDTO> list = wishService.getWishesByDateAndShift(date, shift);
         return ResponseEntity.ok(list);
     }

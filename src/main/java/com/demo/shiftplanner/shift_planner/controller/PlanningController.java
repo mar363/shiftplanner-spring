@@ -9,15 +9,13 @@ import com.demo.shiftplanner.shift_planner.service.PlanningService;
 import com.demo.shiftplanner.shift_planner.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/planing")
+@RequestMapping("/api/planning")
 public class PlanningController {
     private final PlanningService planningService;
     private final UserService userService;
@@ -28,7 +26,8 @@ public class PlanningController {
     }
 
     @PostMapping
-    public ResponseEntity<List<AssignmentResponseDTO>> planForDate(@Valid @RequestParam PlanRequest req) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AssignmentResponseDTO>> planForDate(@Valid @RequestBody PlanRequest req) {
         User admin = userService.findById(req.getAdminId());
         if (admin.getRole() != Role.ADMIN) {
             throw new BusinessException("Only Admin can plan a schedule");

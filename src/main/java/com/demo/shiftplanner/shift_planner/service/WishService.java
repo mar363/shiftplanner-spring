@@ -67,19 +67,26 @@ public class WishService {
         try {
             date = LocalDate.parse(dateStr);
         } catch (DateTimeParseException e) {
-            throw new BusinessException("Invalid format date. Use: YYYY-DD-MM");
+            throw new BusinessException("Invalid format date. Use: YYYY-MM-DD");
+        }
+        List<Wish> wishes;
+
+        if (shiftStr != null) {
+            ShiftType shift = null;
+            try {
+                shift = ShiftType.valueOf(shiftStr.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new BusinessException("Invalid Shift. Chose between EARLY and LATE");
+            }
+            wishes = wishRepository.findByDateAndShiftType(date, shift);
+        } else {
+            wishes = wishRepository.findByDate(date);
         }
 
-        ShiftType shift;
-        try {
-            shift = ShiftType.valueOf(shiftStr.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new BusinessException("Invalid Shift. Chose between EARLY and LATE");
-        }
-List<Wish> wishes = wishRepository.findByDateAndShiftType(date, shift);
-        return wishes.stream().map(w-> {
-            WishResponseDTO dto = new WishResponseDTO(w.getId(), w.getEmployee().getId(), w.getDate().toString(), w.getShiftType().name());
-            return dto;
-        }).collect(Collectors.toList());
+        return wishes.stream().map(w -> new WishResponseDTO(w.getId(),
+                        w.getEmployee().getId(),
+                        w.getDate().toString(),
+                        w.getShiftType().name()))
+                .collect(Collectors.toList());
     }
 }
