@@ -34,7 +34,8 @@ public class PlanningService {
     public List<AssignmentResponseDTO> planForDate(String dateStr) {
         LocalDate date = parseDate(dateStr);
         logger.debug("Start planning");
-
+        assignmentRepository.deleteByDate(date);
+        logger.debug("Deleted old assignments for date {}", date);
         List<User> allEmployees = userRepository.findAllByRole(Role.EMPLOYEE);
 
         if (allEmployees.size() < 2) {
